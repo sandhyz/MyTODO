@@ -19,9 +19,12 @@
                     <td>{{ data.completed_at }}</td>
                     <td>
                         <form>
-                            <button class="fa fa-check check bg-transparent" @click="updateTDL(data.id)" id="selesai"></button>
-                            <button class="fa fa-times times bg-transparent"  @click="update2TDL(data.id)" id="bselesai"></button>
-                            <button class="fa fa-trash-o trash bg-transparent" @click="deleteTDL(data.id)" id="hapus" ></button>
+                            <button class="fa fa-check check bg-transparent" @click="updateTDL(data.id)"
+                                id="selesai"></button>
+                            <button class="fa fa-times times bg-transparent" @click="update2TDL(data.id)"
+                                id="bselesai"></button>
+                            <button class="fa fa-trash-o trash bg-transparent" @click="deleteTDL(data.id)"
+                                id="hapus"></button>
                         </form>
                     </td>
                 </tr>
@@ -77,7 +80,7 @@ export default {
         //menghapus data to do list
         deleteTDL(dataSid) {
             //membuat validasi button
-            const $validate = confirm('apakah kamu yakin mengubahnya menjadi belum selesai?')
+            const $validate = confirm('apakah kamu yakin menghapusnya?')
             if ($validate) {
                 axios.delete('http://127.0.0.1:8000/api/todo/' + dataSid)
                     .catch(error => console.log(error));
@@ -90,10 +93,10 @@ export default {
 </script>
 
 <style scoped>
-
-h1{
+h1 {
     text-align: center;
 }
+
 .middle {
     margin: auto;
     text-align: center;
@@ -119,11 +122,4 @@ h1{
     margin-right: 40px;
 }
 
-.dpn {
-    display: none;
-}
-
-.dpb {
-    display: block;
-}
 </style>
