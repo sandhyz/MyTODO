@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTDLRequest;
 use App\Http\Requests\UpdateTDLRequest;
 use App\Models\TDL;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TDLController extends Controller
@@ -20,7 +21,9 @@ class TDLController extends Controller
         //memasukan data TDL form ke database
         $dataTDL = TDL::create([
             'judul' => $request->TDL['judul'],
+            'isi' => $request->TDL['isi'],
             'completed' => false,
+            'completed_at' => null
         ]);
 
         //cek apakah data masuk ke db atau tidak
@@ -34,14 +37,27 @@ class TDLController extends Controller
 
     public function update(Request $request, TDL $TDL)
     {
+        //mengambil tanggal dari iscompleted harus true
+        if($request->TDL['iscompleted'] == true){
+        $waktu = Carbon::now();
+
         //update data TDL
-        $TDL->update([
-            'judul' => $request->TDL['judul'] ,
-            'completed' => $request->TDL['completed']
+        $validate = $TDL->update([
+            'completed' => $request->TDL['iscompleted'],
+            'completed_at' => $waktu
         ]);
+    } else{
+        $validate = $TDL->update([
+            'completed' => $request->TDL['iscompleted'],
+            'completed_at' => null
+        ]);
+    }
+
+
+
         
         //cek data apakah berhasil atau tidak
-        if($TDL){
+        if($validate == 1){
             return $TDL;
         }else{
             return "data gagal diedit";

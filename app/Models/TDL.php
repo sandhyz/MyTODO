@@ -11,6 +11,7 @@ class TDL extends Model
 
     protected $fillable = [
         'judul',
+        'isi',
         'completed',
         'completed_at'
        

@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('t_d_l_s', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
+            $table->text('isi');
             $table->boolean('completed')->default(false);
-            $table->timestamp('completed_at');
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
     }
