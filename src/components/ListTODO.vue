@@ -2,14 +2,17 @@
     <h3>TO-DO</h3>
 
     <!-- looping tdls menjadi datas -->
-    <div class="item" v-for="dataS in tdls" :key="dataS.id">
-        <form>
-            <input type="checkbox"  @change="updateTDL(dataS.id)" :value="[dataS.completed ? 'checked' : '']" v-model="TDL.iscompleted"
+    <div class="item" v-for="dataS in filters" :key="dataS.id">
+        <div>
+             <form>
+            <input type="checkbox"  @change="updateTDL(dataS.id)" :value="dataS.completed" v-model="TDL.iscompleted"
                 id="check" >
-            <input type="checkbox" @change="updateTDL(dataS.id)">
+            <!-- <input type="checkbox" @change="updateTDL(dataS.id)" v-model="TDL.iscompleted"> -->
             <span :class="[dataS.completed ? 'completed' : '', 'itemText']">{{ dataS.judul }}</span>
             <button class="fa fa-trash-o trash bg-light " @click="deleteTDL(dataS.id)"></button>
         </form>
+        </div>
+       <!-- {{ dataS }} -->
     </div>
 </template>
 
@@ -28,14 +31,25 @@ export default {
     },
 
     //mengambil data dari parent component
-    props: ['tdls'],
+    props: ['dataS'],
 
     methods: {
         //edit to do list menjadi selesai atau tidak selesai
         updateTDL(dataSid) {
-            console.log(this.TDL)
-            axios.put('http://127.0.0.1:8000/api/todo/' + dataSid, { TDL: this.TDL })
-                .catch(error => console.log(error));
+
+            // mengubah iscompleted menjadi
+            
+
+            //membuat validasi apakah yakin dengan ubah menjadi selesai
+            const $validate = confirm('apakah kamu yakin mengubahnya menjadi selesai?')
+            if ($validate == true) {
+                this.TDL.iscompleted = true;
+                axios.put('http://127.0.0.1:8000/api/todo/' + dataSid, { TDL: this.TDL })
+                    .catch(error => console.log(error));
+            } else {
+                this.TDL.iscompleted = false;
+            }
+            // location.reload()
         },
 
         //menghapus data to do list
@@ -43,11 +57,6 @@ export default {
             axios.delete('http://127.0.0.1:8000/api/todo/' + dataSid)
                 .catch(error => console.log(error));
         },
-
-        checklist() {
-            const valued = this.TDL;
-            console.log(valued);
-        }
     },
 
 }
@@ -55,6 +64,7 @@ export default {
 </script>
 
 <style scoped>
+
 .completed {
     text-decoration: line-through;
     color: #999999;

@@ -5,8 +5,14 @@
         <!-- form untuk menambahkan data todo -->
         <form>
             <div class="mb-3">
-                <label class="form-label">Masukan Judul</label>
-                <input type="text" class="form-control" v-model="TDL.judul">
+                <div class="mb-2">
+                    <label class="form-label">Masukan Judul</label>
+                    <input type="text" class="form-control" v-model="TDL.judul">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Masukan Isi Kegiatan</label>
+                    <textarea class="form-control" v-model="TDL.isi"></textarea>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary" @click="addTDL()">Submit</button>
         </form>
@@ -24,7 +30,8 @@ export default {
     data: function () {
         return {
             TDL: {
-                judul: ""
+                judul: "",
+                isi: ""
             }
         }
 
@@ -34,8 +41,14 @@ export default {
     methods: {
         addTDL() {
             axios.post('http://127.0.0.1:8000/api/todo/store', { TDL: this.TDL })
-            .catch(error => alert(error));
+                .catch(error => alert(error));
         }
     },
 }
 </script>
+
+<style scoped>
+h3{
+    text-align: center;
+}
+</style>
