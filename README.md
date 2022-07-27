@@ -1,4 +1,4 @@
-create directory root.
+create directory name "MyTODO".
 
 go to branch front-end, clone.
 
