@@ -1,25 +1,51 @@
 <template>
-
+  <!-- navbar -->
   <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand text-warning" href="#">MyTODO</a>
+      <a class="navbar-brand text-warning" href="/">MyTODO</a>
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <router-link class="nav-link text-white" to="/">To Do</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link text-white" to="/detail">Detail</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link text-white" to="#">Pricing</router-link>
+        </li>
+      </ul>
     </div>
   </nav>
 
-  <router-view />
+  <!-- mengirim data ke route -->
+  <router-view :tdls="tdls" />
 
 </template>
-
 <script>
-import AddTODO from '@/components/AddTODO.vue'
-import DataTOTO from '@/components/DataTODO.vue'
+//import axios untuk get data
+import axios from 'axios';
+
 export default {
-  mounted() {
+  // menyimpan json ke data tdls yang nantinya dikirim ke component lain
+  data: function () {
+    return {
+      tdls: []
+    }
   },
 
-  components: [
-    AddTODO, DataTOTO
-  ],
+  // mengambil data TDL dari database
+  methods: {
+    getTDL() {
+      axios.get('http://127.0.0.1:8000/api/todo')
+        .then(response => (this.tdls = response.data)
+        );
+    }
+  },
+
+  // membuat fungsi agar otomatis dibuat
+  created() {
+    this.getTDL();
+  },
 
 }
 </script>
