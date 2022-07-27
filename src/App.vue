@@ -1,10 +1,28 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+
+  <nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand text-warning" href="#">MyTODO</a>
+    </div>
   </nav>
-  <router-view/>
+
+  <router-view />
+
 </template>
+
+<script>
+import AddTODO from '@/components/AddTODO.vue'
+import DataTOTO from '@/components/DataTODO.vue'
+export default {
+  mounted() {
+  },
+
+  components: [
+    AddTODO, DataTOTO
+  ],
+
+}
+</script>
 
 <style>
 #app {
